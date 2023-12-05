@@ -48,6 +48,7 @@ Graph::~Graph()
 
 Graph &Graph::operator=(const Graph &graph)
 {
+    // hi
     if(this != &graph)
     {
         int n = static_cast<int>(adjList.size());
