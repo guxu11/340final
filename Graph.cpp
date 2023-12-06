@@ -130,6 +130,12 @@ Node* Graph::addVertex(int nodeId)
     return node;
 }
 
+void Graph::addEdges(std::vector<std::pair<int, int>> edges) {
+    for (std::pair<int, int> pair: edges) {
+        addEdge(pair.first, pair.second);
+    }
+}
+
 void BFS(Graph &graph, Node s)
 {
     int n = static_cast<int>(graph.adjList.size());

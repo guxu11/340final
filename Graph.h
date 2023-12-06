@@ -34,6 +34,7 @@ public:
         return adjList;
     }
     void addEdge(int u, int v);
+    void addEdges(std::vector<std::pair<int, int>> edges);
     Node* addVertex(int nodeId);
     std::vector<Node*> adjList;
 private:
