@@ -29,7 +29,7 @@ public:
     {
         return adjList;
     }
-    void addEdge(int v, int w);
+    void addEdge(int u, int v);
     void addVertex(int nodeId);
 //private:
     std::vector<Node*> adjList;

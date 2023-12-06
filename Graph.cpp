@@ -9,7 +9,7 @@ Graph::Graph()
     adjList = std::vector<Node*>(0);
 }
 
-Graph::Graph(const Graph &graph)
+Graph::Graph(const Graph &graph) //copy
 {
     std::vector<Node*> adjList(graph.adjList.size());
     int n = static_cast<int>(graph.adjList.size());
@@ -46,7 +46,7 @@ Graph::~Graph()
     }
 }
 
-Graph &Graph::operator=(const Graph &graph)
+Graph &Graph::operator=(const Graph &graph) //operator
 {
     if(this != &graph)
     {
@@ -84,14 +84,41 @@ Graph &Graph::operator=(const Graph &graph)
     return *this;
 }
 
-void Graph::addEdge(int v, int w)
+void Graph::addEdge(int u, int v)
 {
+    int n = static_cast<int>(adjList.size());
+    bool isVertice = false;
+    Node *current;
+    for(int i = 0; i < n; i++) // check v exist
+    {
+        if (adjList[i]->nodeId == u)
+        {
+            isVertice = true;
+            current = adjList[i];
+        }
+    }
+    if(!isVertice) // Not exist add vertex
+        addVertex(v);
 
+    isVertice = false; // Initialize isVertice
+    while(current)
+    {
+        if(current->nodeId == v)
+        {
+            isVertice = true;
+            break;
+        }
+        current = current->next;
+    }
+    if(!isVertice)
+    {
+        current->next = new Node(v);
+    }
 }
 
 void Graph::addVertex(int nodeId)
 {
-
+    adjList.push_back(new Node(nodeId));
 }
 
 void BFS(Graph graph, Node s)
