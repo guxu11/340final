@@ -5,8 +5,9 @@
 #ifndef FINALPROJ_GRAPH_H
 #define FINALPROJ_GRAPH_H
 
-#include "vector"
-#include "string"
+#include <vector>
+#include <string>
+#include <limits>
 
 class Node
 {
@@ -37,7 +38,7 @@ public:
     std::vector<Node*> adjList;
 };
 
-void BFS(Graph graph, Node s);
-void BFSTree(Graph graph, Node s);
-void PrintPath(Node src, Node dest);
+void BFS(Graph &graph, Node s);
+void BFSTree(Graph &graph, Node s);
+void PrintPath(Graph &graph, Node src, Node dest);
 #endif //FINALPROJ_GRAPH_H

@@ -131,15 +131,29 @@ void Graph::addVertex(int nodeId)
     adjList.push_back(new Node(nodeId));
 }
 
-void BFS(Graph graph, Node s)
+void BFS(Graph &graph, Node s)
+{
+    int n = static_cast<int>(graph.adjList.size());
+    for(int i = 0; i < n; i++) // Initialize
+    {
+        Node *current = graph.adjList[i];
+        while(current)
+        {
+            current->color = "WHITE";
+            current->dist = std::numeric_limits<int>::max();;
+            current->pi = nullptr;
+            current = current->next;
+        }
+    }
+    s.color = "GREY";
+    s.dist = 0;
+    s.pi = nullptr;
+}
+void BFSTree(Graph &graph, Node s)
 {
 
 }
-void BFSTree(Graph graph, Node s)
-{
-
-}
-void PrintPath(Node src, Node dest)
+void PrintPath(Graph &graph, Node src, Node dest)
 {
 
 }
