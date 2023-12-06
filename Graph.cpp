@@ -4,6 +4,7 @@
 
 #include "Graph.h"
 
+Node::Node(): nodeId(0), next(nullptr), dist(0), color("white"), pi(nullptr){};
 Node::Node(int nId): nodeId(nId), next(nullptr), dist(0), color("white"), pi(nullptr) {}
 
 Node::Node(int nId, std::string c, int d): nodeId(nId), color(c), dist(d), next(nullptr), pi(nullptr){}
@@ -93,42 +94,40 @@ Graph &Graph::operator=(const Graph &graph) //operator
     }
     return *this;
 }
-
-void Graph::addEdge(int u, int v)
-{
-    int n = static_cast<int>(adjList.size());
-    bool isVertice = false;
-    Node *current;
-    for(int i = 0; i < n; i++) // check v exist
-    {
-        if (adjList[i]->nodeId == u)
-        {
-            isVertice = true;
-            current = adjList[i];
-        }
-    }
-    if(!isVertice) // Not exist add vertex
-        addVertex(v);
-
-    isVertice = false; // Initialize isVertice
-    while(current)
-    {
-        if(current->nodeId == v)
-        {
-            isVertice = true;
+void Graph::addEdgeOrdered(Node* src, int toAdd) {
+    Node* p = src;
+    while (p->next != nullptr) {
+        if (p->nodeId == toAdd) {
             break;
         }
-        current = current->next;
+        p = p->next;
     }
-    if(!isVertice)
-    {
-        current->next = new Node(v);
+    if (p->nodeId != toAdd) {
+        p->next = new Node(toAdd);
     }
 }
-
-void Graph::addVertex(int nodeId)
+void Graph::addEdge(int u, int v)
 {
-    adjList.push_back(new Node(nodeId));
+    Node* nNode = addVertex(u);
+    Node* vNode = addVertex(v);
+    addEdgeOrdered(nNode, v);
+    addEdgeOrdered(vNode, u);
+}
+
+Node* Graph::addVertex(int nodeId)
+{
+    Node* node = nullptr;
+    for (Node* n: adjList) {
+        if (n->nodeId == nodeId) {
+            node = n;
+            break;
+        }
+    }
+    if (node == nullptr) {
+        node = new Node(nodeId);
+        adjList.push_back(node);
+    }
+    return node;
 }
 
 void BFS(Graph &graph, Node s)

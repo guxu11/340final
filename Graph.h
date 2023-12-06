@@ -18,6 +18,7 @@ public:
     int dist;
     Node *pi;
 
+    Node();
     Node(int nId);
     Node(int nId, std::string c, int d);
 };
@@ -33,9 +34,10 @@ public:
         return adjList;
     }
     void addEdge(int u, int v);
-    void addVertex(int nodeId);
-//private:
+    Node* addVertex(int nodeId);
     std::vector<Node*> adjList;
+private:
+    void addEdgeOrdered(Node* src, int toAdd);
 };
 
 void BFS(Graph &graph, Node s);
