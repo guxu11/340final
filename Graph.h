@@ -6,17 +6,19 @@
 #define FINALPROJ_GRAPH_H
 
 #include "vector"
+#include "string"
 
 class Node
 {
 public:
     int nodeId;
     Node *next;
-    Node(int nId, Node *n = nullptr)
-    {
-        nodeId = nId;
-        next = n;
-    };
+    std::string color;
+    int dist;
+    Node *pi;
+
+    Node(int nId);
+    Node(int nId, std::string c, int d);
 };
 class Graph
 {

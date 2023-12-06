@@ -11,7 +11,7 @@
 - `nodeId` -> `int`, id of each node
 - `next` -> `Node*`, pointing to next adjacent vertex
 - `color` -> `string`
-- `predecessor` -> `Node*`
+- `pi` -> `Node*`
 - `dist` -> `int`, distance from the current vertex to the starter
 
 **Relevant data operations:**

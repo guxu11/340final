@@ -4,6 +4,10 @@
 
 #include "Graph.h"
 
+Node::Node(int nId): nodeId(nId), next(nullptr), dist(0), color("white"), pi(nullptr) {}
+
+Node::Node(int nId, std::string c, int d): nodeId(nId), color(c), dist(d), next(nullptr), pi(nullptr){}
+
 Graph::Graph()
 {
     adjList = std::vector<Node*>(0);
@@ -16,14 +20,16 @@ Graph::Graph(const Graph &graph) //copy
     for (int i = 0; i < n; i++)
     {
         Node *head = graph.adjList[i];
-        Node *newHead = new Node(head->nodeId);
+        Node *newHead = new Node(head->nodeId, head->color, head->dist);
         Node *newTail = newHead;
         while (head->next)
         {
             head = head->next;
-            Node *newNode = new Node(head->nodeId);
+            Node *newNode = new Node(head->nodeId, head->color, head->dist);
             newTail->next = newNode;
+            Node* temp = newTail;
             newTail = newNode;
+            newTail->pi = temp;
         }
         adjList[i] = newHead;
     }
@@ -39,6 +45,7 @@ Graph::~Graph()
         Node *toDel = head;
         while (toDel)
         {
+            toDel->pi = nullptr;
             head = toDel->next;
             delete toDel;
             toDel = head;
@@ -48,8 +55,6 @@ Graph::~Graph()
 
 Graph &Graph::operator=(const Graph &graph) //operator
 {
-    // hi
-    // guxu test
     if(this != &graph)
     {
         int n = static_cast<int>(adjList.size());
@@ -61,6 +66,7 @@ Graph &Graph::operator=(const Graph &graph) //operator
                 Node *toDel = head;
                 while (toDel)
                 {
+                    toDel->pi = nullptr;
                     head = toDel->next;
                     delete toDel;
                     toDel = head;
@@ -72,13 +78,15 @@ Graph &Graph::operator=(const Graph &graph) //operator
         for(int i = 0; i < n; i++)
         {
             Node *head = graph.adjList[i];
-            Node *newHead = new Node(head->nodeId);
+            Node *newHead = new Node(head->nodeId, head->color, head->dist);
             Node *current = newHead;
             while (head->next)
             {
                 head = head->next;
-                current->next = new Node(head->nodeId);
+                current->next = new Node(head->nodeId, head->color, head->dist);
+                Node *temp = current;
                 current = current->next;
+                current->pi = temp;
             }
             adjList[i] = newHead;
         }
