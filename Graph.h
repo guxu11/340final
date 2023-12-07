@@ -24,22 +24,21 @@ public:
     Node(int nId);
     Node(int nId, std::string c, int d);
 };
+
 class Graph
 {
 public:
     Graph();
     Graph(const Graph &graph);
     ~Graph();
+    std::vector<Node*> getAdjList();
+    void setAdjList(std::vector<Node*> list);
     Graph &operator=(const Graph &graph);
-    std::vector<Node*> getAdjList() const
-    {
-        return adjList;
-    }
     void addEdge(int u, int v);
     void addEdges(std::vector<std::pair<int, int>> edges);
     Node* addVertex(int nodeId);
-    std::vector<Node*> adjList;
 private:
+    std::vector<Node*> adjList;
     void addEdgeOrdered(Node* src, int toAdd);
 };
 
