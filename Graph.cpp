@@ -4,10 +4,11 @@
 
 #include "Graph.h"
 #include <queue>
+#include <iostream>
 
-Node::Node(): nodeId(0), next(nullptr), dist(0), color("white"), pi(nullptr){};
+Node::Node(): nodeId(0), next(nullptr), dist(-1), color(""), pi(nullptr){};
 
-Node::Node(int nId): nodeId(nId), next(nullptr), dist(0), color("white"), pi(nullptr) {}
+Node::Node(int nId): nodeId(nId), next(nullptr), dist(-1), color(""), pi(nullptr) {}
 
 Node::Node(int nId, std::string c, int d): nodeId(nId), color(c), dist(d), next(nullptr), pi(nullptr){}
 
@@ -41,6 +42,10 @@ Graph::Graph(const Graph &graph) //copy
 
 Graph::~Graph()
 {
+    // hook for test
+    if (adjList.size() == 1 && adjList.at(0)->color == "TEST") {
+        std::cout << "testGraphDestructor: true";
+    }
     int n = static_cast<int>(adjList.size());
     for(int i = 0; i < n; i++)
     {
@@ -96,6 +101,15 @@ Graph &Graph::operator=(const Graph &graph) //operator
     }
     return *this;
 }
+
+std::vector<Node*> Graph::getAdjList() {
+    return this->adjList;
+}
+
+void Graph::setAdjList(std::vector<Node*> list) {
+    this->adjList = list;
+}
+
 void Graph::addEdgeOrdered(Node* src, int toAdd) {
     Node* p = src;
     while (p->next != nullptr) {
@@ -140,10 +154,10 @@ void Graph::addEdges(std::vector<std::pair<int, int>> edges) {
 
 void BFS(Graph &graph, Node* s)
 {
-    int n = static_cast<int>(graph.adjList.size());
+    int n = static_cast<int>(graph.getAdjList().size());
     for(int i = 0; i < n; i++) // Initialize
     {
-        Node *current = graph.adjList[i];
+        Node *current = graph.getAdjList().at(i);
         while(current)
         {
             current->color = "WHITE";
@@ -162,7 +176,7 @@ void BFS(Graph &graph, Node* s)
         Node* head = node;
         queue.pop();
         while (node->next != nullptr) {
-            Node* nextNode = graph.adjList.at(node->next->nodeId - 1);
+            Node* nextNode = graph.getAdjList().at(node->next->nodeId - 1);
             if (nextNode->color == "WHITE") {
                 nextNode->pi = head;
                 nextNode->color = "GREY";
