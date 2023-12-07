@@ -148,12 +148,21 @@ namespace UNIT_TESTS {
 
     // unit test of BFSTree
     inline void testBFSTree() {
-
     }
 
     // unit test of PrintPath
     inline void testPrintPath() {
+        Graph graph;
+        std::vector<std::pair<int, int>> edges = {
+                {1,2},
+                {2,3},
+                {1,4},
+                {3,4},
+                {3,5}
+        };
+        graph.addEdges(edges);
 
+        PrintPath(graph, 2, 100);
     }
 }
 

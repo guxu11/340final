@@ -133,34 +133,27 @@ void Graph::addEdge(int u, int v)
 Node* Graph::addVertex(int nodeId)
 {
     Node* node = nullptr;
-    for (Node* n: adjList)
-    {
-        if (n->nodeId == nodeId)
-        {
+    for (Node* n: adjList) {
+        if (n->nodeId == nodeId) {
             node = n;
             break;
-         }
+        }
     }
-    if (node == nullptr)
-    {
+    if (node == nullptr) {
         node = new Node(nodeId);
         adjList.push_back(node);
     }
     return node;
 }
 
-void Graph::addEdges(std::vector<std::pair<int, int>> edges)
-{
-    for (std::pair<int, int> pair: edges)
-    {
+void Graph::addEdges(std::vector<std::pair<int, int>> edges) {
+    for (std::pair<int, int> pair: edges) {
         addEdge(pair.first, pair.second);
     }
 }
 
-
-int BFS(Graph &graph, Node* s)
+void BFS(Graph &graph, Node* s)
 {
-    int max_dis = 0;
     int n = static_cast<int>(graph.getAdjList().size());
     for(int i = 0; i < n; i++) // Initialize
     {
@@ -176,8 +169,7 @@ int BFS(Graph &graph, Node* s)
     s->color = "GREY";
     s->dist = 0;
     s->pi = nullptr;
-
-    std::queue<Node*> queue; // BFS
+    std::queue<Node*> queue;
     queue.push(s);
     while (!queue.empty()) {
         Node* node = queue.front();
@@ -190,19 +182,17 @@ int BFS(Graph &graph, Node* s)
                 nextNode->color = "GREY";
                 nextNode->dist = head->dist + 1;
                 queue.push(nextNode);
-                if(nextNode->dist > max_dis) // record deep
-                    max_dis = nextNode->dist;
             }
             node = node->next;
         }
         head->color = "BLACK";
     }
-    return max_dis;
 }
 void BFSTree(Graph &graph, int NodeId) // print BFS tree
 {
     Node* s = graph.getAdjList().at(NodeId - 1);
-    int max_dis = BFS(graph, s);
+    BFS(graph, s);
+    int max_dis = 3;
     for(int i = 0; i <= max_dis; i++)
     {
         for(auto Node : graph.getAdjList()) //push
@@ -221,7 +211,24 @@ void BFSTree(Graph &graph, int NodeId) // print BFS tree
         }
     }
 }
-void PrintPath(Graph &graph, Node src, Node dest)
+void PrintPath(Graph &graph, int src, int dest)
 {
+    if (src < 1 || src >= graph.getAdjList().size() || dest < 1 || dest >= graph.getAdjList().size()) {
+        std::cerr << src << " or " << dest << " is not in the graph" << std::endl;
+    }
+    Node* srcNode = graph.getAdjList().at(src - 1);
+    Node* destNode = graph.getAdjList().at(dest - 1);
+    BFS(graph, srcNode);
+    PrintPath(graph, srcNode, destNode, destNode->pi);
+}
 
+void PrintPath(Graph &graph, Node* src, Node* dest, Node* pi) {
+    if (src == dest) {
+        std::cout << src->nodeId;
+    } else if (pi == nullptr) {
+        std::cout << "no path from " << src->nodeId << " to " << dest->nodeId << "exists" << std::endl;
+    } else {
+        PrintPath(graph, src, dest->pi, dest->pi);
+        std::cout << "->" << dest->nodeId;
+    }
 }
