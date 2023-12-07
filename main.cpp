@@ -2,7 +2,6 @@
 #include "unittests.h"
 
 int main() {
-<<<<<<< HEAD
     // Create a Graph and manually set the adjList for testing
     Graph g1;
 //    Node* n1 = new Node(1);
@@ -22,15 +21,13 @@ int main() {
     std::vector<std::pair<int, int>> edges = {{1,2}, {2,3}, {1,4}, {3,4},{3,5}};
 
     g1.addEdges(edges);
-    BFSTree(g1, g1.adjList[4]);
+    BFSTree(g1, g1.getAdjList()[4]);
     // Check if the adjacency lists are equal
 //    if (g1.getAdjList() == g2.getAdjList()) {
 //        std::cout << "Test passed: Graph assignment operator works correctly." << std::endl;
 //    } else {
 //        std::cerr << "Test failed: Graph assignment operator does not work correctly." << std::endl;
 //    }
-
-=======
     std::cout << std::boolalpha << "testNodeDefaultConstructor: " << UNIT_TESTS::testNodeDefaultConstructor() << std::endl;
     std::cout << std::boolalpha << "testNodeConstructor2: " << UNIT_TESTS::testNodeConstructor2() << std::endl;
     std::cout << std::boolalpha << "testNodeConstructor3: " << UNIT_TESTS::testNodeConstructor3() << std::endl;
@@ -44,6 +41,5 @@ int main() {
     std::cout << std::boolalpha << "testBFS: " << UNIT_TESTS::testBFS() << std::endl;
     UNIT_TESTS::testBFSTree();
     UNIT_TESTS::testPrintPath();
->>>>>>> ef72ead4046514e175a0ae8d90612cec52339b8d
     return 0;
 }
