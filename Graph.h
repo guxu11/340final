@@ -44,6 +44,6 @@ private:
 
 
 int BFS(Graph &graph, Node *s);
-void BFSTree(Graph &graph, Node *s);
+void BFSTree(Graph &graph, int NodeId);
 void PrintPath(Graph &graph, Node src, Node dest);
 #endif //FINALPROJ_GRAPH_H

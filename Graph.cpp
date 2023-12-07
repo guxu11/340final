@@ -199,8 +199,9 @@ int BFS(Graph &graph, Node* s)
     }
     return max_dis;
 }
-void BFSTree(Graph &graph, Node *s) // print BFS tree
+void BFSTree(Graph &graph, int NodeId) // print BFS tree
 {
+    Node* s = graph.getAdjList().at(NodeId - 1);
     int max_dis = BFS(graph, s);
     for(int i = 0; i <= max_dis; i++)
     {
