@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 #include <limits>
+#include <queue>
+#include <iostream>
 
 class Node
 {
@@ -41,7 +43,7 @@ private:
     void addEdgeOrdered(Node* src, int toAdd);
 };
 
-void BFS(Graph &graph, Node s);
+void BFS(Graph &graph, Node *s);
 void BFSTree(Graph &graph, Node s);
 void PrintPath(Graph &graph, Node src, Node dest);
 #endif //FINALPROJ_GRAPH_H

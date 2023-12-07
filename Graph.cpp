@@ -117,31 +117,36 @@ void Graph::addEdge(int u, int v)
 Node* Graph::addVertex(int nodeId)
 {
     Node* node = nullptr;
-    for (Node* n: adjList) {
-        if (n->nodeId == nodeId) {
+    for (Node* n: adjList)
+    {
+        if (n->nodeId == nodeId)
+        {
             node = n;
             break;
-        }
+         }
     }
-    if (node == nullptr) {
+    if (node == nullptr)
+    {
         node = new Node(nodeId);
         adjList.push_back(node);
     }
     return node;
 }
 
-void Graph::addEdges(std::vector<std::pair<int, int>> edges) {
-    for (std::pair<int, int> pair: edges) {
+void Graph::addEdges(std::vector<std::pair<int, int>> edges)
+{
+    for (std::pair<int, int> pair: edges)
+    {
         addEdge(pair.first, pair.second);
     }
 }
 
-void BFS(Graph &graph, Node s)
+void BFS(Graph &graph, Node *s)
 {
-    int n = static_cast<int>(graph.adjList.size());
-    for(int i = 0; i < n; i++) // Initialize
+    Node *current;
+    for(auto t : graph.adjList) // Initialize
     {
-        Node *current = graph.adjList[i];
+        current = t;
         while(current)
         {
             current->color = "WHITE";
@@ -150,13 +155,35 @@ void BFS(Graph &graph, Node s)
             current = current->next;
         }
     }
-    s.color = "GREY";
-    s.dist = 0;
-    s.pi = nullptr;
-}
-void BFSTree(Graph &graph, Node s)
-{
+    s->color = "GREY";
+    s->dist = 0;
+    s->pi = nullptr;
 
+}
+void BFSTree(Graph &graph, Node *s)
+{
+    std::queue<int> print_queue;
+    int max_deep = 3;
+    int distance = 1;
+    BFS(graph, s);
+    print_queue.push(graph.adjList[0]->nodeId);
+    int n = static_cast<int>(graph.adjList.size());
+    while(!print_queue.empty())
+    {
+        std::cout << print_queue.front() << " ";
+        print_queue.pop();
+        for(int i = 1; i < n; i++)
+        {
+            if(graph.adjList[i]->dist == distance)
+            {
+                print_queue.push(graph.adjList[i]->nodeId);
+            }
+//            for(int j = 1; j < max_deep; j++)
+//            {
+//
+//            }
+        }
+    }
 }
 void PrintPath(Graph &graph, Node src, Node dest)
 {
