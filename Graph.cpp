@@ -3,8 +3,10 @@
 //
 
 #include "Graph.h"
+#include <queue>
 
 Node::Node(): nodeId(0), next(nullptr), dist(0), color("white"), pi(nullptr){};
+
 Node::Node(int nId): nodeId(nId), next(nullptr), dist(0), color("white"), pi(nullptr) {}
 
 Node::Node(int nId, std::string c, int d): nodeId(nId), color(c), dist(d), next(nullptr), pi(nullptr){}
@@ -141,8 +143,10 @@ void Graph::addEdges(std::vector<std::pair<int, int>> edges)
     }
 }
 
-void BFS(Graph &graph, Node *s)
+
+int BFS(Graph &graph, Node* s)
 {
+    int max_dis = 0;
     Node *current;
     for(auto t : graph.adjList) // Initialize
     {
@@ -159,29 +163,46 @@ void BFS(Graph &graph, Node *s)
     s->dist = 0;
     s->pi = nullptr;
 
-}
-void BFSTree(Graph &graph, Node *s)
-{
-    std::queue<int> print_queue;
-    int max_deep = 3;
-    int distance = 1;
-    BFS(graph, s);
-    print_queue.push(graph.adjList[0]->nodeId);
-    int n = static_cast<int>(graph.adjList.size());
-    while(!print_queue.empty())
-    {
-        std::cout << print_queue.front() << " ";
-        print_queue.pop();
-        for(int i = 1; i < n; i++)
-        {
-            if(graph.adjList[i]->dist == distance)
-            {
-                print_queue.push(graph.adjList[i]->nodeId);
+    std::queue<Node*> queue; // BFS
+    queue.push(s);
+    while (!queue.empty()) {
+        Node* node = queue.front();
+        Node* head = node;
+        queue.pop();
+        while (node->next != nullptr) {
+            Node* nextNode = graph.adjList.at(node->next->nodeId - 1);
+            if (nextNode->color == "WHITE") {
+                nextNode->pi = head;
+                nextNode->color = "GREY";
+                nextNode->dist = head->dist + 1;
+                queue.push(nextNode);
+                if(nextNode->dist > max_dis) // record deep
+                    max_dis = nextNode->dist;
             }
-//            for(int j = 1; j < max_deep; j++)
-//            {
-//
-//            }
+            node = node->next;
+        }
+        head->color = "BLACK";
+    }
+    return max_dis;
+}
+void BFSTree(Graph &graph, Node *s) // print BFS tree
+{
+    int max_dis = BFS(graph, s);
+    for(int i = 0; i <= max_dis; i++)
+    {
+        for(auto Node : graph.adjList) //push
+        {
+            if(Node->dist == i)
+            {
+                if(i != 0)
+                    std::cout << " -> ";
+                else
+                    std::cout << "   ";
+                std::cout << Node->nodeId;
+                std::cout << std::endl;
+                for(int j = 0; j < (i + 1) * 6; j++)
+                    std::cout << " ";
+            }
         }
     }
 }

@@ -19,9 +19,10 @@ int main() {
 //    g1.addEdge(1,2);
 //    g1.addEdge(2,3);
 //    g1.addEdge(1,4);
-    std::vector<std::pair<int, int>> edges = {{1,2}, {2,3}, {1,4}};
+    std::vector<std::pair<int, int>> edges = {{1,2}, {2,3}, {1,4}, {3,4},{3,5}};
 
     g1.addEdges(edges);
+    BFSTree(g1, g1.adjList[4]);
     // Check if the adjacency lists are equal
 //    if (g1.getAdjList() == g2.getAdjList()) {
 //        std::cout << "Test passed: Graph assignment operator works correctly." << std::endl;

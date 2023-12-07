@@ -43,7 +43,8 @@ private:
     void addEdgeOrdered(Node* src, int toAdd);
 };
 
-void BFS(Graph &graph, Node *s);
-void BFSTree(Graph &graph, Node s);
+
+int BFS(Graph &graph, Node *s);
+void BFSTree(Graph &graph, Node *s);
 void PrintPath(Graph &graph, Node src, Node dest);
 #endif //FINALPROJ_GRAPH_H
