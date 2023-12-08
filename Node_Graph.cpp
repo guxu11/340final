@@ -158,7 +158,15 @@ Node* Graph::addVertex(int nodeId)
     }
     if (node == nullptr) {
         node = new Node(nodeId);
-        adjList.push_back(node);
+        int n = static_cast<int>(adjList.size());
+        int index = 0;
+        for (int i = 0; i < n; i++) {
+            if (adjList.at(i)->nodeId > nodeId) {
+                break;
+            }
+            index++;
+        }
+        adjList.insert(adjList.begin() + index, node);
     }
     return node;
 }
