@@ -5,7 +5,7 @@
 #ifndef FINALPROJ_UNITTESTS_H
 #define FINALPROJ_UNITTESTS_H
 
-#include "Graph.h"
+#include "Node_Graph.h"
 
 namespace UNIT_TESTS {
     // unit test of Node class default constructor without parameters
@@ -148,6 +148,16 @@ namespace UNIT_TESTS {
 
     // unit test of BFSTree
     inline void testBFSTree() {
+        Graph graph;
+        std::vector<std::pair<int, int>> edges = {
+                {1,2},
+                {1,3},
+                {3,4},
+                {2,5},
+                {5,6}
+        };
+        graph.addEdges(edges);
+        BFSTree(graph, 3);
     }
 
     // unit test of PrintPath
@@ -155,14 +165,14 @@ namespace UNIT_TESTS {
         Graph graph;
         std::vector<std::pair<int, int>> edges = {
                 {1,2},
-                {2,3},
-                {1,4},
+                {1,3},
                 {3,4},
-                {3,5}
+                {2,5},
+                {5,6}
         };
         graph.addEdges(edges);
 
-        PrintPath(graph, 2, 100);
+        PrintPath(graph, 1, 6);
     }
 }
 

@@ -4,14 +4,15 @@
 - Xu Gu
   - design doc
   - structure of the project, prototypes
+  - code implementation
   - unit tests
-  - implementation of some methods
+  - code review
 - Chan-Chun Yen
-  - implementation of some methods
-  - free-standing functions
+  - structure of the project
+  - code implementation
 - Joyce Fu
   - structure of the project
-  - online presentation
+  - make presentation
 
 ### 1. The high-level design: a list of entities and operations
 
@@ -52,8 +53,9 @@
 
 #### free-standing methods
 - `void BFS(Graph &graph, Node* s)` -> Breath-first search for a graph from a specified start
-- `void BFSTree(Graph &graph, Node* s)` -> print the BFS tree
-- `void PrintPath(Graph &graph, Node src, Node dest)` -> a recursive function to print the shortest path from a specified start to a specified end
+- `void BFSTree(Graph &graph, int src)` -> print the BFS tree
+- `void PrintPath(Graph &graph, int src, int dest)` -> call the recursive function below to print the shortest path from a specified start to a specified end
+- `void PrintPath(Graph &graph, Node* src, Node* dest, Node* pi)` -> helper method to print path, a recursive function to print the shortest path from a specified start to a specified end
 
 ### 2 Implementation details
 
@@ -79,7 +81,7 @@ match in BFS because it can help us keep the order of distance from the start no
   - Step 2: resize the original adjacent list to the size of adjList in the graph to be copied
   - Step 3: Create deep copied nodes from graph to be copied, and add the nodes to the adjancent list
 - `Node* Graph::addVertex(int nodeId)`, pseudocode is as follows
-    ```python
+    ```
   addVertex(nodeId):
         initialize a new Node newVertex = NULL
         for each vertex n in the graph:
@@ -91,7 +93,7 @@ match in BFS because it can help us keep the order of distance from the start no
         return newVertex
   ```
 - `void Graph::addEdge(int u, int v)`, pseudocode is as follows
-    ```python
+    ```
   addEdge(u, v):
         add vertexU to graph
         add vertexV to graph
@@ -101,7 +103,17 @@ match in BFS because it can help us keep the order of distance from the start no
             add vertexU to the last of vertexV's adjacent list 
   ```
 - `void BFS(Graph &graph, Node* s)`, Breadth-first Search of the graph, pseudocode can be found in page 7 of the slide
-- `void BFSTree(Graph &graph, Node* s)`, pseudocode is as follows
-    ```python
+- `void BFSTree(Graph &graph, int src)`, pseudocode is as follows
+    ```
+    PrintBFSTree(G, src):
+        BFS(G, src)
+        max_dis = max dist of all the vertics from src
+        for i = 0, 1, ..., max_dis:
+            for each node in G:
+              if node.dist == i:
+                  print " " * ((i-1) * 4)
+                  print ->
+                  print node.nodeId
+                  print newLine
   ```
 - `void PrintPath(Graph &graph, Node src, Node dest)`, print the shortest path, pseudocode can be found in page 10 of the slide

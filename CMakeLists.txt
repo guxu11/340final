@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(Archive
-        Graph.cpp
-        Graph.h
+        Node_Graph.cpp
+        Node_Graph.h
         main.cpp
         unittests.h)

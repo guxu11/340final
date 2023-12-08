@@ -13,6 +13,7 @@ int main() {
     std::cout << std::boolalpha << "testGraphAddEdges: " << UNIT_TESTS::testGraphAddEdges() << std::endl;
     std::cout << std::boolalpha << "testGraphAddVertex: " << UNIT_TESTS::testGraphAddVertex() << std::endl;
     std::cout << std::boolalpha << "testBFS: " << UNIT_TESTS::testBFS() << std::endl;
+    std::cout << std::endl;
     UNIT_TESTS::testBFSTree();
     UNIT_TESTS::testPrintPath();
     return 0;
